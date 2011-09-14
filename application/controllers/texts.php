@@ -36,6 +36,7 @@ class Texts extends CI_Controller {
 		$data['errors'] = '';
 		$data['pages'] = $this->pages();
 		$data['comments'] = $this->comments($id);
+		$data['texts'] = $this->texts($id);
 		$data['text_id'] = $id;
 		$this->load->view('pages.php', $data);
 	}
@@ -43,11 +44,11 @@ class Texts extends CI_Controller {
 	private function get_uloaded_form()
 	{
 		$data = array(
-				'name' => $this->input->post('text_name'),
-				'content' => $this->input->post('text_content'),
-				'type' => $this->input->post('text_type'),
-				'page_id' => $this->input->post('page_id'),
-				);
+			'name' => $this->input->post('text_name'),
+			'content' => $this->input->post('text_content'),
+			'type' => $this->input->post('text_type'),
+			'page_id' => $this->input->post('page_id'),
+			);
 		return $data;
 	}
 
