@@ -2,7 +2,21 @@
 <div id="leftColumn">
 	<div id='news_form'>
 	</div>
-	<div id='news'></div>
+	<div id='news'>
+	<?php if(isset($news)) {
+		if(is_array($news)) {
+			foreach($anews as $news) {
+				if(isset($anews['subject']) and isset($anews['content'])
+							and isset($anews['id'])) 
+				{
+					echo("<a href='".site_url()."news/id/".$anews['id']."'>"
+							.$anews['subject']." | ");
+				}
+			}
+		}
+	}
+	?>
+	</div>
 </div><!-- end: leftcolumn -->
 
 <div id="footer">

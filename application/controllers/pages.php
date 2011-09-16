@@ -32,6 +32,12 @@ class Pages extends CI_Controller {
 		return $texts;
 	}
 
+	private function news()
+	{
+		$news = $this->tdatabase->get_entry('news');
+		return $news;
+	}
+
 	public function add() 
 	{
 		$form_data = $this->get_uloaded_form();
@@ -41,7 +47,8 @@ class Pages extends CI_Controller {
 			redirect('pages');
 		} else {
 			$data['errors'] = $form_data['errors'];
-			$data['pages'] = $this->pages();
+			$data['pages'] 	= $this->pages();
+			$data['news'] 	= $this->news();
 			$this->load->view('pages.php', $data);
 		}
 	}
@@ -58,6 +65,7 @@ class Pages extends CI_Controller {
 		$data['pages'] = $this->pages();
 		$data['texts'] = $this->texts($id);
 		$data['page_id'] = $id;
+		$data['news'] 	= $this->news();
 		$this->load->view('pages.php', $data);
 	}
 
@@ -65,6 +73,7 @@ class Pages extends CI_Controller {
 	{
 		$data['pages'] = $this->pages();
 		$data['root_page'] = 'true';
+		$data['news'] 	= $this->news();
 		$this->load->view('pages', $data);
 	}
 }
