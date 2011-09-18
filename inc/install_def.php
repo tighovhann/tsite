@@ -98,4 +98,20 @@ $comments_fields = array(
 	)
 );
 
+$news_fields = array(
+	'id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'unsigned' => TRUE,
+		'auto_increment' => TRUE,
+		'null' => FALSE,
+	),
+	'text_id' => array(
+		'type' => 'INT',
+		'constraint' => 5,
+		'unsigned' => TRUE,
+		'null' => FALSE,
+	)
+);
+
 ?>

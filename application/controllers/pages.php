@@ -35,6 +35,7 @@ class Pages extends CI_Controller {
 	private function news()
 	{
 		$news = $this->tdatabase->get_entry('news');
+		print_r($news);
 		return $news;
 	}
 
@@ -73,7 +74,7 @@ class Pages extends CI_Controller {
 	{
 		$data['pages'] = $this->pages();
 		$data['root_page'] = 'true';
-		$data['news'] 	= $this->news();
+		$data['news'] = $this->news();
 		$this->load->view('pages', $data);
 	}
 }

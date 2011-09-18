@@ -24,6 +24,8 @@ class Install extends CI_Controller {
 		$this->__install_a_table('texts', $texts_fields);
 		GLOBAL $comments_fields;
 		$this->__install_a_table('comments', $comments_fields);
+		GLOBAL $news_fields;
+		$this->__install_a_table('news', $news_fields);
 	}
 
 	public function __construct()

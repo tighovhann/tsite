@@ -5,9 +5,9 @@
 	<div id='news'>
 	<?php if(isset($news)) {
 		if(is_array($news)) {
-			foreach($anews as $news) {
-				if(isset($anews['subject']) and isset($anews['content'])
-							and isset($anews['id'])) 
+			foreach($news as $anews) {
+				if(isset($anews['subject']) and 
+					isset($anews['content']) and isset($anews['id'])) 
 				{
 					echo("<a href='".site_url()."news/id/".$anews['id']."'>"
 							.$anews['subject']." | ");

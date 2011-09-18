@@ -10,9 +10,9 @@ class News extends CI_Controller {
 		$this->load->helper(array('form', 'url'));
 	}
 
-	private function news($id)
+	private function news()
 	{
-		$news = $this->tdatabase->get_entry_where('id', $id, 'news');
+		$news = $this->tdatabase->get_entry('news');
 		return $news;
 	}
 
