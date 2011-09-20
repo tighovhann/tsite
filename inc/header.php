@@ -25,8 +25,7 @@
 				$name = $page['name'];
 				echo("<li>"
 					."<a href='".site_url()."pages/id/".$page['id']."'>"
-					.$page['name']."</a><a href='"
-					.site_url('pages/remove/'.$page['id'])."'><b>X</b></a>"
+					.$page['name']."</a>"
 					."</li>");
 			}
 		}

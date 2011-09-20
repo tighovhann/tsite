@@ -2,6 +2,8 @@
 
 class News extends CI_Controller {
 
+	var $table = 'news';
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -23,23 +25,26 @@ class News extends CI_Controller {
 		return $comments;
 	}
 
-	public function id($id=-1)
+	private function pages()
+	{
+		$pages = $this->tdatabase->get_entry('pages');
+		return $pages;
+	}
+
+	public function id($id)
 	{
 		$data['errors'] = '';
 		$data['pages'] = $this->pages();
-		$data['comments'] = $this->comments($id);
 		$data['news'] = $this->news($id);
-		$data['text_id'] = $id;
+		$data['news_id'] = $id;
 		$this->load->view('pages.php', $data);
 	}
 
 	private function get_uloaded_form()
 	{
 		$data = array(
-			'name' => $this->input->post('text_name'),
-			'content' => $this->input->post('text_content'),
-			'type' => $this->input->post('text_type'),
-			'page_id' => $this->input->post('page_id'),
+			'name' => $this->input->post('news_name'),
+			'content' => $this->input->post('news_content'),
 			);
 		return $data;
 	}
@@ -48,6 +53,7 @@ class News extends CI_Controller {
 	{
 		$form_data = $this->get_uloaded_form();
 		$data['errors'] = '';
+		print_r($form_data);
 		if (empty($form_data['errors'])) {
 			$this->tdatabase->insert_entry($form_data);
 		}

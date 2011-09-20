@@ -1,16 +1,42 @@
 </div><!-- END: content -->
 <div id="leftColumn">
 	<div id='news_form'>
+			<p>
+<?php
+			$data = array (
+				'name' => 'news_content',
+				'style' => 'width: 157px;',
+			);
+			echo form_open('news/add')
+					.form_fieldset('news')
+					."<div class='textfield'>"
+						.form_label('name', 'news_name')
+						.form_input('news_name', '')
+					."</div>"
+					."<div class='textfield' style='width: 160px;'>"
+						.form_label('content', 'news_content')
+						.form_textarea($data)
+					."</div>"
+					."<div class='buttons'>"
+						.form_submit('submit', 'submit')
+					."</div>"
+					.form_fieldset_close()
+				.form_close();
+?>
+			</p>
 	</div>
 	<div id='news'>
 	<?php if(isset($news)) {
 		if(is_array($news)) {
 			foreach($news as $anews) {
-				if(isset($anews['subject']) and 
+				if(isset($anews['name']) and 
 					isset($anews['content']) and isset($anews['id'])) 
 				{
 					echo("<a href='".site_url()."news/id/".$anews['id']."'>"
-							.$anews['subject']." | ");
+							.$anews['name']."</a> | "
+							."<a href=''>remove</a>"
+							. "<p>" . $anews['content'] . "</p>"
+							);
 				}
 			}
 		}

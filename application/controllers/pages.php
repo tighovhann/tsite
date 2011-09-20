@@ -35,7 +35,6 @@ class Pages extends CI_Controller {
 	private function news()
 	{
 		$news = $this->tdatabase->get_entry('news');
-		print_r($news);
 		return $news;
 	}
 

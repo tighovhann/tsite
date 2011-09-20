@@ -106,12 +106,15 @@ $news_fields = array(
 		'auto_increment' => TRUE,
 		'null' => FALSE,
 	),
-	'text_id' => array(
-		'type' => 'INT',
-		'constraint' => 5,
-		'unsigned' => TRUE,
-		'null' => FALSE,
-	)
+	'name' => array(
+		'type' => 'VARCHAR',
+		'constraint' => '100'
+	),
+	'content' => array(
+		'type' => 'TEXT',
+		'null' => TRUE,
+		'constraint' => '5000'
+	),
 );
 
 ?>
