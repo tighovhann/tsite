@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+use strict;
+
 sub get_version($$);
 
 ## TODO
@@ -13,6 +15,7 @@ sub get_version($$);
 #########################################################################################################
 
 my $TSITE_PATH = '/home/tigran/sites/'; 
+my $TSITE_NAME = 'tsite';
 
 system('
         cd /opt; 
@@ -51,23 +54,32 @@ if (-e '/opt/lampp/RELEASENOTES') {
           ");
 }
 
-if (-d "$TSITE_PATH/tsite") {
+if (-d "$TSITE_PATH/$TSITE_NAME") {
     system("
-            cd $TSITE_PATH/tsite; svn up;
+            cd $TSITE_PATH/$TSITE_NAME; svn up;
         ");
 } else {
     system("
             mkdir -p $TSITE_PATH;
             cd $TSITE_PATH; 
-            svn checkout https://tsite.googlecode.com/svn/trunk/ tsite --username tigran.job@gmail.com;
+            svn checkout https://$TSITE_NAME.googlecode.com/svn/trunk/ $TSITE_NAME --username tigran.job@gmail.com;
             cd /opt/lampp/htdocs/;
-            ln -s $TSITE_PATH/tsite;
+            ln -s $TSITE_PATH/$TSITE_NAME;
         ");
 }
 
+my $host = 'localhost';## MySQL Host
+my $user = 'root'## Your username
+my $password = ''; ## Your password
+my $database = $TSITE_NAME; ## Your Database name you want
+my $dbh = Msql->connect($host, undef, $user, $password);
+                
+### Create database.
+my $rc = $dbh->createdb($database);
+$dbh->disconnect(); 
 
 system("
-        firefox localhost/tsite/install;
+        firefox localhost/$TSITE_NAME/install;
     ");
 
 #########################################################################################################
