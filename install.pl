@@ -1,97 +1,83 @@
 #!/usr/bin/perl
 
-use strict;
-
-sub get_version($$);
-
+#####################################################################################################
 ## TODO
-## 1. Download, install and run
-## 2. Check and if xampp already exists do not download 
+## +1. Check and if xampp already exists do not download 
+## +2. Download, install and run
 ## 3. Check if subversion does not exists download and install
 ## 4. Check out tsite and install, make link in the httdocs
 ## 5. Install database
 ## 6. Open browser with the site 
 
-#########################################################################################################
+#####################################################################################################
 
-my $TSITE_PATH = '/home/tigran/sites/'; 
-my $TSITE_NAME = 'tsite';
+sub shell_command($);
+sub get_version($$);
 
-system('
-        cd /opt; 
-        rm -f index.html;
-        wget http://sourceforge.net/projects/xampp/files/BETAS/;
-      ');
+#####################################################################################################
 
-my $version = get_version('xampp-linux-(.*).tar.gz\/download', '</opt/index.html');
+my $TSITE_PATH = "/home/tigran/sites/";
+my $TSITE_NAME = "tsite";
 
-if (-e '/opt/lampp/RELEASENOTES') {
-    my $installed_version = get_version('XAMPP for Linux (.*)','/opt/lampp/RELEASENOTES');
-    if ($installed_version == $version) {
-        print "INFO: /opt/lampp already exists. no download is performed.\n";
-        system("
-                rm -f /opt/index.html; 
-                /opt/lampp/lampp restart;
-              ");
-    } else {
-        ## TODO  save database and httdocs
-        system("
-                rm -f /opt/index.html;
-                rm -f /opt/download;
-                rm -fr /opt/lampp;
-                wget http://sourceforge.net/projects/xampp/files/BETAS/xampp-linux-$version.tar.gz/download;
-                tar xzfv download;
-                /opt/lampp/lampp start;
-              ");
+unlink "/opt/index.html";
+shell_command('cd /opt; wget http://sourceforge.net/projects/xampp/files/BETAS/;');
+
+## retrieving version information
+my $internet_version = get_version("/opt/index.html", "xampp-linux-(.*).tar.gz\/download");
+unlink "/opt/index.html";
+my $local_version = 0;
+if (-e "/opt/lampp/RELEASENOTES") {
+
+    $local_version = get_version("/opt/lampp/RELEASENOTES", "XAMPP for Linux (.*)\$");
+    print "XAMPP internet version: $internet_version\n";
+    print "XAMPP local version: $local_version\n";
+
+    my $local_version_number = $local_version;
+    $local_version_number =~ s/\.//;
+    my $internet_version_number = $internet_version;
+    $internet_version_number =~ s/\.//;
+
+    ## comparing versions
+    if ($internet_version_number > $local_version_number) {
+        print "Downloading new version";
+        unlink "download";
+        shell_command("cd /opt; wget http://sourceforge.net/projects/xampp/files/BETAS/xampp-linux-$internet_version.tar.gz/download");
+        if (-d "/opt/lampp") {
+            rename "/opt/lampp","/opt/lampp.old";
+        }
+        shell_command("cd /opt; tar xzf download");
     }
-} else {
-    system("
-            rm -f /opt/index.html;
-            rm -f /opt/download;
-            wget http://sourceforge.net/projects/xampp/files/BETAS/xampp-linux-$version.tar.gz/download;
-            tar xzfv download;
-            /opt/lampp/lampp start;
-          ");
 }
 
+shell_command("apt-get install subversion");
 if (-d "$TSITE_PATH/$TSITE_NAME") {
-    system("
-            cd $TSITE_PATH/$TSITE_NAME; svn up;
-        ");
+    shell_command("cd $TSITE_PATH/$TSITE_NAME;svn up");
 } else {
-    system("
-            mkdir -p $TSITE_PATH;
-            cd $TSITE_PATH; 
-            svn checkout https://$TSITE_NAME.googlecode.com/svn/trunk/ $TSITE_NAME --username tigran.job@gmail.com;
-            cd /opt/lampp/htdocs/;
-            ln -s $TSITE_PATH/$TSITE_NAME;
-        ");
+    ## checking out tsite
+    shell_command("mkdir -p $TSITE_PATH/$TSITE_NAME;cd $TSITE_PATH; svn checkout https://tsite.googlecode.com/svn/trunk/ $TSITE_NAME --username tigran.job\@gmail.com");
+    shell_command("chmod a+rw $TSITE_PATH/$TSITE_NAME -R");
+}
+## creating symbolic link in the htdocs
+shell_command("cd /opt/lampp/htdocs/; rm -f $TSITE_NAME; ln -s $TSITE_PATH/$TSITE_NAME");
+
+#####################################################################################################
+
+sub shell_command($)
+{
+    my $cmd = shift;
+    print "$cmd\n";
+    system($cmd);
 }
 
-my $host = 'localhost';## MySQL Host
-my $user = 'root'## Your username
-my $password = ''; ## Your password
-my $database = $TSITE_NAME; ## Your Database name you want
-my $dbh = Msql->connect($host, undef, $user, $password);
-                
-### Create database.
-my $rc = $dbh->createdb($database);
-$dbh->disconnect(); 
-
-system("
-        firefox localhost/$TSITE_NAME/install;
-    ");
-
-#########################################################################################################
-
-sub get_version($$) 
+sub get_version($$)
 {
-    my $regexp = shift;
-    my $file = shift;
-    open(HTML, $file);
+    my $filename = shift; 
+    print $filename
+    my $regexp = shift; 
+    open(FILE, $filename);
     my $version_number = 0;
     my $version_name;
-    while(<HTML>) {
+    while(<FILE>) {
         if (/$regexp/g) {
             my $curr_version_name = $1;
             if ($curr_version_name =~ /^\d.\d.\d$/) {
@@ -104,6 +90,8 @@ sub get_version($$)
             }
         }
     }
-    close HTML;
+    close FILE;
     return $version_name;
 }
+
+#####################################################################################################
