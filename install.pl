@@ -16,7 +16,7 @@ sub get_version($$);
 
 #####################################################################################################
 
-my $TSITE_PATH = "/home/tigran/sites/";
+my $TSITE_PATH = "/home/tighov/sites/";
 my $TSITE_NAME = "tsite";
 
 unlink "/opt/index.html";
@@ -31,22 +31,21 @@ if (-e "/opt/lampp/RELEASENOTES") {
     $local_version = get_version("/opt/lampp/RELEASENOTES", "XAMPP for Linux (.*)\$");
     print "XAMPP internet version: $internet_version\n";
     print "XAMPP local version: $local_version\n";
+}
 
-    my $local_version_number = $local_version;
-    $local_version_number =~ s/\.//;
-    my $internet_version_number = $internet_version;
-    $internet_version_number =~ s/\.//;
-
-    ## comparing versions
-    if ($internet_version_number > $local_version_number) {
-        print "Downloading new version";
-        unlink "download";
-        shell_command("cd /opt; wget http://sourceforge.net/projects/xampp/files/BETAS/xampp-linux-$internet_version.tar.gz/download");
-        if (-d "/opt/lampp") {
-            rename "/opt/lampp","/opt/lampp.old";
-        }
-        shell_command("cd /opt; tar xzf download");
-    }
+my $local_version_number = $local_version;
+$local_version_number =~ s/\.//;
+my $internet_version_number = $internet_version;
+$internet_version_number =~ s/\.//;
+## comparing versions
+if ($internet_version_number > $local_version_number) {
+print "Downloading new version";
+unlink "download";
+shell_command("cd /opt; wget http://sourceforge.net/projects/xampp/files/BETAS/xampp-linux-$internet_version.tar.gz/download");
+if (-d "/opt/lampp") {
+    rename "/opt/lampp","/opt/lampp.old";
+}
+shell_command("cd /opt; tar xzf download");
 }
 
 shell_command("apt-get install subversion");
