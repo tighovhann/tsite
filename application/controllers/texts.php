@@ -37,6 +37,7 @@ class Texts extends CI_Controller {
 		$data['pages'] = $this->pages();
 		$data['comments'] = $this->comments($id);
 		$data['texts'] = $this->texts($id);
+        $data['texts'][0]['type'] = 'fullwidth';
 		$data['text_id'] = $id;
 		$this->load->view('pages.php', $data);
 	}
