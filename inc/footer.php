@@ -25,6 +25,7 @@
 ?>
 			</p>
 	</div>
+    <input type="button" value="+" onClick="show_form('news_form')" />
 	<div id='news'>
 	<?php if(isset($news)) {
 		if(is_array($news)) {
@@ -33,8 +34,8 @@
 					isset($anews['content']) and isset($anews['id'])) 
 				{
 					echo("<a href='".site_url()."news/id/".$anews['id']."'>"
-							.$anews['name']."</a> | "
-							."<a href=''>remove</a>"
+							. $anews['name']."</a> | "
+							. "<a href='".site_url() . "news/remove/" . $anews['id'] . "'>remove</a>"
 							. "<p>" . $anews['content'] . "</p>"
 							);
 				}
@@ -77,5 +78,14 @@ if(isset($info)) {
 </div>
 </div><!-- END: contentWrapper -->
 </body>
-
+<script src="<?=site_url('js/jquery-1.4.2.min.js')?>"></script>
+<script>
+    $('#new_page_form').toggle();
+    $('#new_text_form').toggle();
+    $('#new_comment_form').toggle();
+    $('#news_form').toggle();
+    function show_form(f) {
+        $('#' + f).toggle();
+    }
+</script>
 </html>

@@ -3,9 +3,9 @@
 #####################################################################################################
 ## TODO
 ## +1. Check and if xampp already exists do not download 
-## +2. Download, install and run
-## 3. Check if subversion does not exists download and install
-## 4. Check out tsite and install, make link in the httdocs
+## +2. Download, install
+## +3. Check if subversion does not exists download and install
+## +4. Check out tsite, make link in the httdocs
 ## 5. Install database
 ## 6. Open browser with the site 
 
