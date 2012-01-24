@@ -66,6 +66,11 @@ class Pages extends CI_Controller {
 		$data['texts'] = $this->texts($id);
 		$data['page_id'] = $id;
 		$data['news'] 	= $this->news();
+        $data['page_types'] = array(
+            'fullwidth'=>'fullwidth',
+            'halfwidth_left'=>'halfwidth_left',
+            'halfwidth_right'=>'halfwidth_right'
+            );
         $this->parser->parse("pages.tpl", $data);
 	}
 
@@ -74,10 +79,10 @@ class Pages extends CI_Controller {
 		$data['pages'] = $this->pages();
 		$data['root_page'] = 'true';
 		$data['news'] = $this->news();
-        $data['page_types'] =  array(
+        $data['page_types'] = array(
             'fullwidth'=>'fullwidth',
             'halfwidth_left'=>'halfwidth_left',
-            'halfwidth_right'=>'halfwidth_right',
+            'halfwidth_right'=>'halfwidth_right'
             );
         $this->parser->parse("pages.tpl", $data);
 	}

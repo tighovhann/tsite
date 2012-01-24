@@ -110,7 +110,7 @@
 
                 <div class='textfield'>
                     {form_label('type', 'text_type')}
-                    {form_dropdown('text_type')}
+                    {form_dropdown('text_type', $page_types)}
 
                 </div>
                 <div class='buttons'>
