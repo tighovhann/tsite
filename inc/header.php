@@ -43,7 +43,7 @@
 
 <?php
 if(isset($page_id)) {
-	echo "<a href=".site_url('pages/remove/'.$page_id)."><img src=".site_url('img/x_small.png')."></a>";
+	echo "<a href=".site_url('pages/remove/'.$page_id)."><img src=".site_url('img/delete.png')."></a>";
 }
 ?>
 
@@ -57,9 +57,11 @@ if(isset($page_id)) {
 				echo("<div class='".$text['type']."'>"
 					."<h1><a href='"
 					.site_url()."texts/id/".$text['id']."'></h1>"
-					.$text['name']."<a href='"
-					.site_url('texts/remove/'.$text['id'])
-	                ."'><img height='16' src='".site_url('img/x_small.png')."'></a>"
+					.$text['name']
+                    ."<a href='".site_url('texts/edit/'.$text['id'])
+	                ."'><img height='16' src='".site_url('img/edit.png')."'></a>"
+                    ."<a href='".site_url('texts/remove/'.$text['id'])
+	                ."'><img height='16' src='".site_url('img/delete.png')."'></a>"
 					."<p>".$text['content']."</p>"
 					."</div>"
 					);
