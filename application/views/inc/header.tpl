@@ -17,17 +17,17 @@
 
 <div id="navigationTop">
   <ul>
+    <li><input type="button" value="+" onClick="show_form('new_page_form')" /></li>
     {if isset($pages) }
         {if is_array($pages) }
             {foreach from=$pages item=page}
                 {if isset($page.name) and isset($page.id) }
+                    <li><a href={site_url("admin")}>admin</a></li>
                     <li><a href={site_url("pages/id/`$page.id`")}>{$page.name}</a></li>
                 {/if}
             {/foreach}
         {/if}
     {/if}
-
-    <li><input type="button" value="+" onClick="show_form('new_page_form')" /></li>
   </ul>
 </div><!-- end: navigationtop -->
 

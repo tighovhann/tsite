@@ -21,7 +21,7 @@ class Admin extends CI_Controller {
 	public function index()
 	{
 		$data['pages'] = $this->pages();
-		$this->load->view('admin', $data);
+        $this->parser->parse("admin.tpl", $data);
 	}
 }
 

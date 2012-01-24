@@ -37,7 +37,7 @@ class News extends CI_Controller {
 		$data['pages'] = $this->pages();
 		$data['news'] = $this->news($id);
 		$data['news_id'] = $id;
-		$this->load->view('pages.php', $data);
+        $this->parser->parse("pages.tpl", $data);
 	}
 
 	private function get_uloaded_form()

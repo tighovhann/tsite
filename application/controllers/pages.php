@@ -49,7 +49,6 @@ class Pages extends CI_Controller {
 			$data['errors'] = $form_data['errors'];
 			$data['pages'] 	= $this->pages();
 			$data['news'] 	= $this->news();
-			#$this->load->view('pages.php', $data);
             $this->parser->parse("pages.tpl", $data);
 		}
 	}
@@ -67,7 +66,6 @@ class Pages extends CI_Controller {
 		$data['texts'] = $this->texts($id);
 		$data['page_id'] = $id;
 		$data['news'] 	= $this->news();
-		#$this->load->view('pages.php', $data);
         $this->parser->parse("pages.tpl", $data);
 	}
 
@@ -81,7 +79,6 @@ class Pages extends CI_Controller {
             'halfwidth_left'=>'halfwidth_left',
             'halfwidth_right'=>'halfwidth_right',
             );
-		#$this->load->view('pages', $data);
         $this->parser->parse("pages.tpl", $data);
 	}
 }
